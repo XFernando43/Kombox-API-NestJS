@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { product } from './product.entity';
 import { Repository } from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
@@ -28,20 +28,30 @@ export class ProductService {
             throw new Error(`Error al buscar el producto: ${error.message}`);
         }
     }
-    
 
     async createProduct(_product: any) {
         try {
-            if (!_product || Object.values(_product).some(field => field === null || field === undefined || field === '')) {
-                throw new Error('Por favor, completa todos los campos correctamente.');
-            } else {
-                const newProduct = this.productRepository.create(_product);
-                return await this.productRepository.save(newProduct);
+          if (!_product || Object.values(_product).some(field => field === null || field === undefined || field === '')) {
+            return new HttpException('Campos Vacios', HttpStatus.CONFLICT);
+          }
+    
+          const foundProduct = await this.productRepository.findOne({
+            where: {
+              name: _product.name
             }
+          });
+    
+          if (foundProduct) {
+            return new HttpException('Product Already Exists', HttpStatus.CONFLICT);
+          }
+    
+          const newProduct = this.productRepository.create(_product);
+          return await this.productRepository.save(newProduct);
+    
         } catch (error) {
-            throw new Error(`Ocurrió un error en el servidor: ${error.message}`);
+          throw new Error(`Ocurrió un error en el servidor: ${error.message}`);
         }
-    }
+      }
 
     async deleteProduct(productId:number){
         try{
