@@ -5,14 +5,11 @@ import {InjectRepository} from '@nestjs/typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 @Injectable()
 export class ProductService {
-    constructor(@InjectRepository(product) private productRepository:Repository<product>){
-
-    }
-
+    constructor(@InjectRepository(product) private productRepository:Repository<product>){}
+    
     async getProducts(){
         return await this.productRepository.find();
     }
-
     async getProduct(productId: number) {
         try {
             const product = await this.productRepository.findOne({
@@ -21,30 +18,26 @@ export class ProductService {
                 }
             });
             if (!product) {
-                return 'not found';
+                return new HttpException('Product Doesnt Exists', HttpStatus.NOT_FOUND);
             }
             return product;
         } catch (error) {
             throw new Error(`Error al buscar el producto: ${error.message}`);
         }
     }
-
     async createProduct(_product: CreateProductDto) {
         try {
           if (!_product || Object.values(_product).some(field => field === null || field === undefined || field === '')) {
             return new HttpException('Campos Vacios', HttpStatus.CONFLICT);
           }
-    
           const foundProduct = await this.productRepository.findOne({
             where: {
               name: _product.name
             }
           });
-    
           if (foundProduct) {
             return new HttpException('Product Already Exists', HttpStatus.CONFLICT);
           }
-    
           const newProduct = this.productRepository.create(_product);
           return await this.productRepository.save(newProduct);
     
@@ -64,7 +57,6 @@ export class ProductService {
             throw new Error(`Ocurrió un error en el servidor: ${error.message}`);
         }
     }
-
     async updateProduct(productId:number, product:CreateProductDto){
         try{
             if(productId===0){
@@ -76,5 +68,4 @@ export class ProductService {
             throw new Error(`Ocurrió un error en el servidor: ${error.message}`);
         }
     }
-    
 }
