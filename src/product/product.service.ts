@@ -9,6 +9,10 @@ export class ProductService {
 
     }
 
+    getProducts(){
+        return this.productRepository.find();
+    }
+
     async createProduct(_product:any) {
         const newProduct = this.productRepository.create(_product);
         return await this.productRepository.save(newProduct);
