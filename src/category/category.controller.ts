@@ -24,12 +24,11 @@ export class CategoryController {
 
     @Delete(':categoryId')
     deleteCategory(@Param('categoryId',ParseIntPipe) categoryId:number){
-        this.categoryService.deleteCategory(categoryId);
-        return 'Eliminado';
+        return this.categoryService.deleteCategory(categoryId);
     }
 
     @Patch(':categoryId')
     updateCategory(@Param('categoryId',ParseIntPipe) categoryId:number, @Body() category:any){
-        this.categoryService.updateCategory(categoryId,category);
+        return this.categoryService.updateCategory(categoryId,category);
     }
 }   
