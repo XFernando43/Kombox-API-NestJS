@@ -1,7 +1,7 @@
 export class CreateProductDto{
-    productId:number
+    // productId:number
     name:string
     description:string
     price:string
-    stock:number
+    stock:string
 }

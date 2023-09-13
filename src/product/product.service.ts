@@ -29,7 +29,7 @@ export class ProductService {
         }
     }
 
-    async createProduct(_product: any) {
+    async createProduct(_product: CreateProductDto) {
         try {
           if (!_product || Object.values(_product).some(field => field === null || field === undefined || field === '')) {
             return new HttpException('Campos Vacios', HttpStatus.CONFLICT);
@@ -65,7 +65,7 @@ export class ProductService {
         }
     }
 
-    async updateProduct(productId:number, product:any){
+    async updateProduct(productId:number, product:CreateProductDto){
         try{
             if(productId===0){
                 return 'product no econtrado';

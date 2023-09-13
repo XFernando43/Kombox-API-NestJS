@@ -17,7 +17,7 @@ export class ProductController {
 
     @Get(':productId')
     async getProductId(@Param('productId', ParseIntPipe) productId: number) {
-        return this.productService.getProduct(productId); // Cambiado a getProduct y pasando productId como parámetro
+        return this.productService.getProduct(productId); 
     }
 
     @Post()
