@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
-import { product } from '../entites/product.entity';
+import { product } from '../../Domain/entities/product.entity'
 
 @Injectable()
 export class ProductService {
@@ -18,6 +18,10 @@ export class ProductService {
                 productId:productId
             }
         })
+    }
+
+    async createProduct(product:any){
+        return null;
     }
 
 }
