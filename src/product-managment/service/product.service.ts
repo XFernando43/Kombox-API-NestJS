@@ -6,7 +6,6 @@ import { productRequest } from '../Domain/request/product.request';
 
 @Injectable()
 export class ProductService {
-
     constructor(@InjectRepository(product) private productRepository:Repository<product>){}
 
     async getProducts(){
