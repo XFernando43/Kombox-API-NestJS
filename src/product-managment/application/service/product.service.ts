@@ -31,14 +31,14 @@ export class ProductService {
           if (!_product || Object.values(_product).some(field => field === null || field === undefined || field === '')) {
             return new HttpException('Campos Vacios', HttpStatus.CONFLICT);
           }
-        //   if (
-        //     _product.status !== "FULLSTOCK" &&
-        //     _product.status !== "NOTSTOCK" &&
-        //     _product.status !== "INSTOCK" &&
-        //     _product.status !== "DISCOUNTED"
-        //   ) {
-        //     return new HttpException('Status not valid', HttpStatus.CONFLICT);
-        //   } 
+           if (
+             _product.status !== "FULLSTOCK" &&
+             _product.status !== "NOTSTOCK" &&
+             _product.status !== "INSTOCK" &&
+             _product.status !== "DISCOUNTED"
+           ) {
+             return new HttpException('Status not valid', HttpStatus.CONFLICT);
+           } 
 
           const foundProduct = await this.productRepository.findOne({
             where: {
@@ -48,7 +48,7 @@ export class ProductService {
           if (foundProduct) {
             return new HttpException('Product Already Exists', HttpStatus.CONFLICT);
           }
-          const newProduct = this.productRepository.create(_product);
+          const newProduct = await this.productRepository.create(_product);
           return await this.productRepository.save(newProduct);
     
         } catch (error) {

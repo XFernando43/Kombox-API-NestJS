@@ -3,4 +3,4 @@ export enum ProductStatus{
     INSTOCK = 'INSTOCK',
     OUTSTOCK = 'NOTSTOCK',
     DISCOUNTED = 'DISCOUNTED',
-}
+} 
