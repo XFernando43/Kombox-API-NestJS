@@ -1,5 +1,4 @@
-export class CreateProductDto{
-    // productId:number
+export class productResponse{
     name:string
     description:string
     price:string

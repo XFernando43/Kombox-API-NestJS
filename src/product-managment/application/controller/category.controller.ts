@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
-import { CategoryService } from './category.service';
+import { CategoryService } from '../service/category.service';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('category')

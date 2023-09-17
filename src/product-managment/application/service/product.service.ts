@@ -1,8 +1,9 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { product } from './product.entity';
 import { Repository } from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
-import { CreateProductDto } from './dto/create-product.dto';
+import { product } from 'src/product-managment/Domain/entities/product.entity';
+import { productRequest } from 'src/product-managment/Domain/request/productRequest';
+
 @Injectable()
 export class ProductService {
     constructor(@InjectRepository(product) private productRepository:Repository<product>){}
@@ -25,7 +26,7 @@ export class ProductService {
             throw new Error(`Error al buscar el producto: ${error.message}`);
         }
     }
-    async createProduct(_product: CreateProductDto) {
+    async createProduct(_product: productRequest) {
         try {
           if (!_product || Object.values(_product).some(field => field === null || field === undefined || field === '')) {
             return new HttpException('Campos Vacios', HttpStatus.CONFLICT);
@@ -57,7 +58,7 @@ export class ProductService {
             throw new Error(`Ocurrió un error en el servidor: ${error.message}`);
         }
     }
-    async updateProduct(productId:number, product:CreateProductDto){
+    async updateProduct(productId:number, product:productRequest){
         try{
             if(productId===0){
                 return 'product no econtrado';

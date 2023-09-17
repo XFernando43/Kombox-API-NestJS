@@ -1,9 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
-import { ProductService } from './product.service';
-import { type } from 'os';
-import { product } from './product.entity';
+import { ProductService } from '../service/product.service';
 import { ApiTags } from '@nestjs/swagger';
+import { productRequest } from 'src/product-managment/Domain/request/productRequest';
 
 @Controller('product')
 @ApiTags('Products')
@@ -23,7 +21,7 @@ export class ProductController {
     }
 
     @Post()
-    async createProduct(@Body() newProduct: CreateProductDto){
+    async createProduct(@Body() newProduct: productRequest){
         return this.productService.createProduct(newProduct);
     }
 

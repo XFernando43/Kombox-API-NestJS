@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductModule } from './product/product.module';
+import { ProductModule } from './product-managment/infracestructura/product.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoryModule } from './category/category.module';
+import { CategoryModule } from './product-managment/infracestructura/category.module';
 
 @Module({
   imports: [
