@@ -3,10 +3,14 @@ import { Repository } from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import { product } from 'src/product-managment/Domain/entities/product.entity';
 import { productRequest } from 'src/product-managment/Domain/request/productRequest';
+import { ProductStatus } from 'src/product-managment/Domain/enums/ProductStatus';
+import { Cateogry } from 'src/product-managment/Domain/entities/category.entity';
 
 @Injectable()
 export class ProductService {
-    constructor(@InjectRepository(product) private productRepository:Repository<product>){}
+    constructor(
+        @InjectRepository(product) private productRepository:Repository<product>,
+        @InjectRepository(Cateogry) private categoryRepository:Repository<Cateogry>){}
     
     async getProducts(){
         return await this.productRepository.find();
@@ -31,26 +35,48 @@ export class ProductService {
           if (!_product || Object.values(_product).some(field => field === null || field === undefined || field === '')) {
             return new HttpException('Campos Vacios', HttpStatus.CONFLICT);
           }
-           if (
-             _product.status !== "FULLSTOCK" &&
-             _product.status !== "NOTSTOCK" &&
-             _product.status !== "INSTOCK" &&
-             _product.status !== "DISCOUNTED"
-           ) {
-             return new HttpException('Status not valid', HttpStatus.CONFLICT);
-           } 
-
-          const foundProduct = await this.productRepository.findOne({
-            where: {
-              name: _product.name
+          if (
+            _product.status !== "FULLSTOCK" &&
+            _product.status !== "NOTSTOCK" &&
+            _product.status !== "INSTOCK" &&
+            _product.status !== "DISCOUNTED") 
+            {
+                return new HttpException('Status not valid', HttpStatus.CONFLICT);
             }
-          });
-          if (foundProduct) {
-            return new HttpException('Product Already Exists', HttpStatus.CONFLICT);
-          }
-          const newProduct = await this.productRepository.create(_product);
-          return await this.productRepository.save(newProduct);
-    
+
+            if(_product.stock === 0){
+                _product.status = ProductStatus.OUTSTOCK;
+            }
+
+            const foundProduct = await this.productRepository.findOne({
+                where: {
+                    name: _product.name
+                }
+            });
+            
+            if (foundProduct) {
+                return new HttpException('Product Already Exists', HttpStatus.CONFLICT);
+            }
+
+            const category = await this.categoryRepository.findOne({
+                where:{
+                    categoryId:_product.categoryId
+                }
+            });
+            
+            if(!category){
+                return new HttpException('Category Not found', HttpStatus.CONFLICT);
+            }
+
+            const newProduct = new product();
+            newProduct.name = _product.name;
+            newProduct.description = _product.description;
+            newProduct.price = _product.price;
+            newProduct.stock = _product.stock;
+            newProduct.status = _product.status;
+            newProduct.category = category;
+
+            return await this.productRepository.save(newProduct);
         } catch (error) {
           throw new Error(`Ocurrió un error en el servidor: ${error.message}`);
         }
