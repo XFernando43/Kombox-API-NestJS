@@ -18,6 +18,7 @@ export class ProductService {
         }
         );
     }
+
     async getProduct(productId: number) {
         try {
             const product = await this.productRepository.findOne({
@@ -34,6 +35,7 @@ export class ProductService {
             throw new Error(`Error al buscar el producto: ${error.message}`);
         }
     }
+    
     async createProduct(_product: productRequest) {
         try {
           if (!_product || Object.values(_product).some(field => field === null || field === undefined || field === '')) {
@@ -98,7 +100,7 @@ export class ProductService {
             throw new Error(`Ocurrió un error en el servidor: ${error.message}`);
         }
     }
-    
+
     async updateProduct(productId:number, product:productRequest){
         try{
             if(productId===0){
