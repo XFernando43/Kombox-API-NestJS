@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthenticationService } from './authentication.service';
-import { AccountRequest } from './request/account.request';
+import { AuthenticationService } from '../service/authentication.service';
+import { AccountRequest } from 'src/Authentication-Managment/Domain/request/account.request';
 
 @Controller('authentication')
 @ApiTags('Authentication')

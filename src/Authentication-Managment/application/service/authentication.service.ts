@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Account } from './entity/account.entity';
 import * as bcrypt from 'bcrypt';
+import { Account } from 'src/Authentication-Managment/Domain/entities/account.entity';
 
 @Injectable()
 export class AuthenticationService {
@@ -23,7 +23,8 @@ export class AuthenticationService {
         account.email = _account.email;
         account.password = hashedPassword;
 
-        return this.accountRepository.create(account);
+        this.accountRepository.create(account);
+        return this.accountRepository.save(account);
 
     }
 }

@@ -5,7 +5,7 @@ import { ProductModule } from './product-managment/infracestructura/product.modu
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModule } from './product-managment/infracestructura/category.module';
 import { AccountsModule } from './accounts/accounts.module';
-import { AuthenticationModule } from './authentication/authentication.module';
+import { AuthenticationModule } from './Authentication-Managment/infracestructura/authentication.module';
 
 @Module({
   imports: [
