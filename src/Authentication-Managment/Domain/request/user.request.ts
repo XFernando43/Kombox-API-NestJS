@@ -5,5 +5,6 @@ export class UserRequest{
     phone:string
     birthDate:Date
     // accountId:Account;
-
+    email:string
+    password:string
 }

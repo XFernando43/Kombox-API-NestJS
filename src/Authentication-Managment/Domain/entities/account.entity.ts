@@ -11,6 +11,6 @@ export class Account{
     password:string
 
     @OneToOne(() => User, (user) => user.account)
-    @JoinColumn() //genera la foreign KEy
+    @JoinColumn({name:'UserFk'}) //genera la foreign KEy
     user: User;
 }

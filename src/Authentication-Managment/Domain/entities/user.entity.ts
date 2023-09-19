@@ -15,7 +15,7 @@ export class User{
     birthDate:Date
 
     @OneToOne(()=> Account,(Account)=>Account.user)
-    @JoinColumn() //genera la foreign KEy
+    //@JoinColumn() //genera la foreign KEy
     account:Account;
 
 }
