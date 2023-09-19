@@ -1,12 +1,12 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { AccountsService } from '../service/accounts.service';
 import { ApiTags } from '@nestjs/swagger';
+import { UsersService } from '../service/user.service';
 
-@Controller('accounts')
-@ApiTags('Account')
-export class AccountsController {
+@Controller('User')
+@ApiTags('User')
+export class UserController {
 
-    constructor(private accountService:AccountsService){ }
+    constructor(private accountService:UsersService){ }
 
     @Get()
     getUser(){
