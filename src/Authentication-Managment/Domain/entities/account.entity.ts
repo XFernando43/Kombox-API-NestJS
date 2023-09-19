@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { User } from "./user.entity";
 
 @Entity('Accounts')
 export class Account{
@@ -8,4 +9,8 @@ export class Account{
     email:string
     @Column()
     password:string
+
+    @OneToOne(() => User, (user) => user.account)
+    @JoinColumn() //genera la foreign KEy
+    user: User;
 }

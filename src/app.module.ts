@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { ProductModule } from './product-managment/infracestructura/product.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModule } from './product-managment/infracestructura/category.module';
-import { AccountsModule } from './accounts/accounts.module';
+import { AccountsModule } from './Authentication-Managment/infracestructura/accounts.module';
 import { AuthenticationModule } from './Authentication-Managment/infracestructura/authentication.module';
 
 @Module({

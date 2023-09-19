@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Account } from "./account.entity"
 
 @Entity('Users')
 export class User{
@@ -12,4 +13,9 @@ export class User{
     phone:string
     @Column({ type: 'datetime'})
     birthDate:Date
+
+    @OneToOne(()=> Account,(Account)=>Account.user)
+    @JoinColumn() //genera la foreign KEy
+    account:Account;
+
 }
