@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { ProductModule } from './product-managment/infracestructura/product.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModule } from './product-managment/infracestructura/category.module';
+import { AccountsModule } from './accounts/accounts.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -16,9 +18,11 @@ import { CategoryModule } from './product-managment/infracestructura/category.mo
       password:'123456789',
       database:'kombox-api',
       entities:[__dirname+'/**/*.entity{.ts,.js}'],
-      synchronize:false,
+      synchronize:false, 
     }),
-    CategoryModule
+    CategoryModule,
+    AccountsModule,
+    AuthenticationModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { CategoryService } from '../service/category.service';
 import { ApiTags } from '@nestjs/swagger';
+import { categoryRequest } from 'src/product-managment/Domain/request/categoryRequest';
 
 @Controller('category')
 @ApiTags('Category')
@@ -20,7 +21,7 @@ export class CategoryController {
     }
 
     @Post()
-    createCategory(@Body() category:any){
+    createCategory(@Body() category:categoryRequest){
         return this.categoryService.createCategory(category);
     }
 

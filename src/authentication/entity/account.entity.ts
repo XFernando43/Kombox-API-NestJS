@@ -1,6 +1,7 @@
-import { Collection, Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+
 @Entity('Accounts')
-class Account{
+export class Account{
     @PrimaryGeneratedColumn()
     accountId:number
     @Column()
