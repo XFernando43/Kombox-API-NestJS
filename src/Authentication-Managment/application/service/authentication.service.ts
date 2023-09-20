@@ -14,7 +14,6 @@ export class AuthenticationService {
         return 'ACCOUNT';
     }
 
-  
     async postAccount(_account:any){
         const hashedPassword = await bcrypt.hash(_account.password,12);
 
