@@ -1,10 +1,12 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Account } from 'src/Authentication-Managment/Domain/entities/account.entity';
 import { AccounLogingRequest } from 'src/Authentication-Managment/Domain/request/AccounLoging.request';
 import { JwtService } from '@nestjs/jwt';
+import { Response,Request } from 'express';
+import { ApiUnauthorizedResponse } from '@nestjs/swagger';
 
 @Injectable()
 export class AuthenticationService {
@@ -39,5 +41,33 @@ export class AuthenticationService {
         return jwt;
     }
 
+    async prueba(request:Request){
+        try{
+            const cookie = request.cookies['jwt'];
+            const data = await this.jwtService.verifyAsync(cookie);
+            if(!data){
+                return new UnauthorizedException();
+            }
+
+            const user = await this.accountRepository.findOne({
+                where:{
+                    accountId:data['id'],
+                }
+            })
+            console.log(user);
+            return user;
+        }catch(error){
+            return new UnauthorizedException();
+        }
+
+    }
+
+    async logOut(response:Response){
+        response.clearCookie('jwt');
+
+        return {
+            message:'success log out'
+        }
+    }
   
 }

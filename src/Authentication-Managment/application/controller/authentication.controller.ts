@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthenticationService } from '../service/authentication.service';
 import { AccounLogingRequest } from 'src/Authentication-Managment/Domain/request/AccounLoging.request';
@@ -31,13 +31,15 @@ export class AuthenticationController {
     }
 
     @Get('user')
-    async user(@Res() request:Request){
-        const cookie = request.cookies['jwt'];
-
-        return cookie;
+    user(@Req() request: Request) {
+        return this.authenticationService.prueba(request);
+      
     }
 
-    
+    @Post('logOut')
+    async logOut(@Res({passthrough:true}) response:Response){
+        return this.authenticationService.logOut(response);
+    } 
     
     
 }
