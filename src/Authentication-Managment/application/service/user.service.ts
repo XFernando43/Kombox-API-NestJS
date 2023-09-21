@@ -5,6 +5,7 @@ import { User } from 'src/Authentication-Managment/Domain/entities/user.entity';
 import { UserRequest } from 'src/Authentication-Managment/Domain/request/user.request';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { categoryRequest } from 'src/product-managment/Domain/request/categoryRequest';
 
 @Injectable()
 export class UsersService {
@@ -19,20 +20,18 @@ export class UsersService {
 
     async createUser(_user: UserRequest) {
         try {
-            
             const hashedPassword = await bcrypt.hash(_user.password,12);
-
             const newUser = this.UserRepository.create(_user);
-            
+
             const newAccount = new Account();
             newAccount.email = _user.email;
             newAccount.password = hashedPassword;
             newAccount.user = newUser;
             
-          await this.UserRepository.save(newUser);
-          await this.AccountRepository.save(newAccount);
-          
-          return newAccount;
+            await this.UserRepository.save(newUser);
+            await this.AccountRepository.save(newAccount);        
+            
+            return newAccount;
         } catch (error) {
           return new HttpException('Conflict', HttpStatus.CONFLICT);
         }
