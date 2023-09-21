@@ -4,11 +4,15 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Account } from 'src/Authentication-Managment/Domain/entities/account.entity';
 import { AccounLogingRequest } from 'src/Authentication-Managment/Domain/request/AccounLoging.request';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthenticationService {
 
-    constructor(@InjectRepository(Account) private accountRepository:Repository<Account>){ }
+    constructor(
+                @InjectRepository(Account) private accountRepository:Repository<Account>,
+                private jwtService:JwtService
+                ){ }
 
    
     async getAccount(){
@@ -16,6 +20,7 @@ export class AuthenticationService {
     }
 
     async Login(account: AccounLogingRequest){
+
         const user = this.accountRepository.findOne({
             where:{
                 email:account.email
@@ -29,19 +34,10 @@ export class AuthenticationService {
             throw new BadRequestException('Invalid credentials');
         }
 
-        return user;
+        const jwt = await this.jwtService.signAsync({id:(await user).accountId});
+
+        return jwt;
     }
 
-    async postAccount(_account:any){
-        const hashedPassword = await bcrypt.hash(_account.password,12);
-
-        const account = new Account();
-
-        account.email = _account.email;
-        account.password = hashedPassword;
-
-        this.accountRepository.create(account);
-        return this.accountRepository.save(account);
-
-    }
+  
 }

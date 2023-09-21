@@ -20,6 +20,7 @@ import { AuthenticationModule } from './Authentication-Managment/infracestructur
       entities:[__dirname+'/**/*.entity{.ts,.js}'],
       synchronize:false, 
     }),
+    
     CategoryModule,
     AccountsModule,
     AuthenticationModule
