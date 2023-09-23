@@ -56,7 +56,7 @@ export class ProductService {
 
             const foundProduct = await this.productRepository.findOne({
                 where: {
-                    name: _product.name
+                    Productname: _product.producName
                 }
             });
             
@@ -75,9 +75,9 @@ export class ProductService {
             }
 
             const newProduct = new product();
-            newProduct.name = _product.name;
-            newProduct.description = _product.description;
-            newProduct.price = _product.price;
+            newProduct.Productname = _product.producName;
+            newProduct.ProductDescription = _product.producDescription;
+            newProduct.Productprice = _product.productPrice;
             newProduct.stock = _product.stock;
             newProduct.status = _product.status;
             newProduct.category = category;

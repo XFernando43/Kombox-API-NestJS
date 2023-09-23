@@ -7,17 +7,17 @@ export class product{
     @PrimaryGeneratedColumn()
     productId:number
     @Column()
-    name:string
+    Productname:string
     @Column()
-    description:string
+    ProductDescription:string
     @Column()
-    price:string
+    Productprice:string
     @Column()
     stock:number
-    @Column({ type: 'enum', enum: ProductStatus, default: ProductStatus.INSTOCK })
-    status: ProductStatus
     @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
     createdAt:Date
+    @Column({ type: 'enum', enum: ProductStatus, default: ProductStatus.INSTOCK })
+    status: ProductStatus
 
     //relationShip
     @ManyToOne(() => Cateogry, (category) => category.products)
