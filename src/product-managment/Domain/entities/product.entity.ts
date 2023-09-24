@@ -24,4 +24,6 @@ export class product{
     @JoinColumn({ name: 'category_id' }) // Especifica el nombre de la columna de clave foránea
     category: Cateogry;
 
+
+    
 }  
