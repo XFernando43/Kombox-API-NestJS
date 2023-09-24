@@ -1,20 +1,21 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { PaymentState } from "../enums/paymentState"
-import { CartItems } from "./itemCart.entiy"
 import { User } from "src/Authentication-Managment/Domain/entities/user.entity"
+import { CartItems } from "./cartItems.entity"
 
 @Entity('ShoppingCarts')
 export class ShoppingCart{
     @PrimaryGeneratedColumn()
     shoppingCartId:number
 
-    @OneToMany(()=>User,(User)=>User.userId)
+    @ManyToOne(()=>User,(User)=>User.userId)
+    @JoinColumn({name:'UserId'})
     userId:User
 
     @Column()
     paymentStatus:PaymentState
 
-    @Column({type:'date',default:()=>'CURRENT_STAMP'})
+    @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
     paymentDate:Date
 
     @Column()

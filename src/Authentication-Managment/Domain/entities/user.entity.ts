@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm"
 import { Account } from "./account.entity"
 import { ShoppingCart } from "src/Shopping-Managment/domain/entities/ShoppingCart.entity"
 
@@ -18,7 +18,7 @@ export class User{
     @OneToOne(()=> Account,(Account)=>Account.user)
     account:Account;
 
-    @ManyToOne(()=>ShoppingCart,(ShoppingCart)=>ShoppingCart.shoppingCartId)
+    @OneToMany(()=>ShoppingCart,(ShoppingCart)=>ShoppingCart.shoppingCartId)
     shoppingCarts:ShoppingCart[]
 
 }

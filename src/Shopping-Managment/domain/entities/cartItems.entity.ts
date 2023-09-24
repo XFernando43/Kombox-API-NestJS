@@ -7,7 +7,7 @@ export class CartItems{
     @PrimaryGeneratedColumn()
     itemCartId:number
     
-    @Column({type:'date', default: ()=>'CURRENT_TIMESTAMP'})
+    @Column({type:'datetime', default: ()=>'CURRENT_TIMESTAMP'})
     AddedDate:Date
 
     @OneToOne(()=>product,(product)=>product.productId)

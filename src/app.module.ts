@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModule } from './product-managment/infracestructura/category.module';
 import { AccountsModule } from './Authentication-Managment/infracestructura/user.module';
 import { AuthenticationModule } from './Authentication-Managment/infracestructura/authentication.module';
+import { ItemCartModule } from './testing/ItemCart/item-cart.module';
+import { ShoppingCartModule } from './testing/shopping-cart/shopping-cart.module';
 
 @Module({
   imports: [
@@ -18,12 +20,13 @@ import { AuthenticationModule } from './Authentication-Managment/infracestructur
       password:'123456789',
       database:'kombox-api',
       entities:[__dirname+'/**/*.entity{.ts,.js}'],
-      synchronize:false, 
+      synchronize:true, 
     }),
-    
     CategoryModule,
     AccountsModule,
-    AuthenticationModule
+    AuthenticationModule,
+    ItemCartModule,
+    ShoppingCartModule
   ],
   controllers: [AppController],
   providers: [AppService],
