@@ -1,6 +1,6 @@
 export class ItemCartRequest{
-    // addedDate: Date
+    addedDate: Date
     productId: number
-    // quantity: number
-    // ShoppingCartId:number
+    quantity: number
+    ShoppingCartId:number
 }
