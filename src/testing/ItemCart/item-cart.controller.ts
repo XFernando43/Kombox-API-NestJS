@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ItemCartService } from './item-cart.service';
 import { ItemCartRequest } from './request/itemCartRequest';
@@ -7,6 +7,16 @@ import { ItemCartRequest } from './request/itemCartRequest';
 @ApiTags('item-cart')
 export class ItemCartController {
     constructor(private ItemCartService:ItemCartService){}
+
+    @Get(':itemId')
+    getItemCartById(@Param('itemId') itemId:number){
+        return this.ItemCartService.getItemCartId(itemId);
+    }
+
+    @Get()
+    getItemCarts(){
+        return this.ItemCartService.getAllCartItems();
+    }
 
     @Post()
     getItemCart(@Body() itemCartRequest:ItemCartRequest){

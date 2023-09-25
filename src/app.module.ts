@@ -21,6 +21,7 @@ import { ShoppingCartModule } from './testing/shopping-cart/shopping-cart.module
       database:'kombox-api',
       entities:[__dirname+'/**/*.entity{.ts,.js}'],
       synchronize:false,  
+      logging:true,
     }),
     CategoryModule,
     AccountsModule,

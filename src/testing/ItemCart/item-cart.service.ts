@@ -14,7 +14,15 @@ export class ItemCartService {
     ){}
 
     async getAllCartItems(){
-        return await this.CarItemsRepository.find();
+        return await this.CarItemsRepository.find({ relations: ['productId', 'shoppingCart'] });
+    }
+
+    async getItemCartId(itemId:number){
+        return await this.CarItemsRepository.findOne({
+            where:{
+                itemCartId:itemId
+            }
+        })
     }
 
     async postCartItems(itemCartRequest:ItemCartRequest){
@@ -28,6 +36,7 @@ export class ItemCartService {
         if(!productAux){
             return new HttpException('Product not found', HttpStatus.CONFLICT);
         }
+        console.log("ACA --> ",productAux,"\n","\n","\n");
         //validar que el shopping Cart Existe
         const shoppingCartAux = await this.ShoppingCartRepository.findOne({
             where:{shoppingCartId:itemCartRequest.ShoppingCartId}
@@ -36,12 +45,21 @@ export class ItemCartService {
             return new HttpException('ShoppingCart Does not exist', HttpStatus.CONFLICT);
         }
 
-        // product y itemCart Exist
+        // validar de un producto ya agregado para que solo se actualize
 
-        /*
-        
-        */
-         
+        const existingItemCart = await this.CarItemsRepository.findOne({
+            where:{
+                // productId:productAux,
+                shoppingCart:shoppingCartAux
+            }
+        })
+
+        console.log("ACA --> ",existingItemCart,"\n","\n","\n");
+
+        if(existingItemCart){
+            return 'Ya has agregado este producto';
+        }
+        // validar de un producto ya agregado para que solo se actualize
 
         ItemCart.AddedDate = new Date();
         ItemCart.productId = productAux;
