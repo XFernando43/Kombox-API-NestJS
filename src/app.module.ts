@@ -20,7 +20,7 @@ import { ShoppingCartModule } from './testing/shopping-cart/shopping-cart.module
       password:'123456789',
       database:'kombox-api',
       entities:[__dirname+'/**/*.entity{.ts,.js}'],
-      synchronize:false, 
+      synchronize:true,  
     }),
     CategoryModule,
     AccountsModule,
