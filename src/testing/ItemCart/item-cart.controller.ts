@@ -8,14 +8,14 @@ import { ItemCartRequest } from './request/itemCartRequest';
 export class ItemCartController {
     constructor(private ItemCartService:ItemCartService){}
 
+    @Get()
+    getItemCarts(){
+        return this.ItemCartService.getAllCartItems(); 
+    }
+
     @Get(':itemId')
     getItemCartById(@Param('itemId') itemId:number){
         return this.ItemCartService.getItemCartId(itemId);
-    }
-
-    @Get()
-    getItemCarts(){
-        return this.ItemCartService.getAllCartItems();
     }
 
     @Post()
@@ -23,8 +23,8 @@ export class ItemCartController {
         return this.ItemCartService.postCartItems(itemCartRequest);
     }
 
-    // @Post()
-    // PostItemCart(@Body() itemCartRequest:any){
-
-    // }
+    @Get('getItemByShoppingCart/:shoppingCartId')
+    getItemsByShoppingCart(@Param('shoppingCartId') shoppingCartId:number){
+        return 'HOLI :3';
+    }
 }

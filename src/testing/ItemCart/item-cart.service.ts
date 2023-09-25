@@ -14,15 +14,40 @@ export class ItemCartService {
     ){}
 
     async getAllCartItems(){
-        return await this.CarItemsRepository.find({ relations: ['ProductId', 'ShoppingCart'] });
+        return await this.CarItemsRepository.find({ relations: ['ProductId', 'Shopping_Cart'] });
     }
 
     async getItemCartId(itemId:number){
         return await this.CarItemsRepository.findOne({
+            relations: ['ProductId', 'Shopping_Cart'] ,
             where:{
                 itemCartId:itemId
             }
         })
+    }
+
+    async getItemCartByShoppingCart(shoppingId:number){
+
+        const cartFromDb = this.ShoppingCartRepository.findOne({
+            where:{
+                shoppingCartId:shoppingId
+            }
+        });
+
+        let cart = new ShoppingCart();
+
+        cart.items = null;
+        cart.paymentDate = (await cartFromDb).paymentDate;
+        cart.paymentStatus = (await cartFromDb).paymentStatus;
+        cart.shoppingCartId = (await cartFromDb).shoppingCartId;
+        cart.totalPrice = 32;
+        cart.userId = (await cartFromDb).userId;
+
+        return await this.CarItemsRepository.findOne({
+            where:{
+               Shopping_Cart:cart
+            }
+        });
     }
 
     async postCartItems(itemCartRequest:ItemCartRequest){
