@@ -9,7 +9,7 @@ export class ShoppingCart{
     shoppingCartId:number
 
     @ManyToOne(()=>User,(User)=>User.userId)
-    @JoinColumn({name:'UserId'})
+    @JoinColumn({name:'userId'})
     userId:User
 
     @Column()
@@ -21,6 +21,6 @@ export class ShoppingCart{
     @Column()
     totalPrice:number
 
-    @OneToMany(()=>CartItems,(item)=>item.shoppingCart)
+    @OneToMany(()=>CartItems,(item)=>item.Shopping_Cart)
     items:CartItems[]
 }

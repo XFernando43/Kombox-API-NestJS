@@ -12,12 +12,12 @@ export class CartItems{
 
     @ManyToOne(()=>product,(product)=>product.itemCart)
     @JoinColumn({name:'ProductId'})
-    productId:product 
+    ProductId:product 
     
     @Column()
     quantity:number
 
     @ManyToOne(()=> ShoppingCart,(cart)=>cart.items)
     @JoinColumn({ name: 'Shoppingcart_Id' })
-    shoppingCart:ShoppingCart
+    Shopping_Cart:ShoppingCart
 }

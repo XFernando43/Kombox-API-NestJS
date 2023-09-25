@@ -13,10 +13,7 @@ export class ProductService {
         @InjectRepository(Cateogry) private categoryRepository:Repository<Cateogry>){}
     
     async getProducts(){
-        return await this.productRepository.find({
-            relations: ['category'],
-        }
-        );
+        return await this.productRepository.find({relations: ['category'],});
     }
 
     async getProduct(productId: number) {
@@ -27,6 +24,7 @@ export class ProductService {
                     productId: productId,
                 }
             });
+
             if (!product) {
                 return new HttpException('Product Doesnt Exists', HttpStatus.NOT_FOUND);
             }

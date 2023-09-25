@@ -14,7 +14,7 @@ export class ItemCartService {
     ){}
 
     async getAllCartItems(){
-        return await this.CarItemsRepository.find({ relations: ['productId', 'shoppingCart'] });
+        return await this.CarItemsRepository.find({ relations: ['ProductId', 'ShoppingCart'] });
     }
 
     async getItemCartId(itemId:number){
@@ -49,22 +49,24 @@ export class ItemCartService {
 
         const existingItemCart = await this.CarItemsRepository.findOne({
             where:{
-                // productId:productAux,
-                shoppingCart:shoppingCartAux
+                ProductId:productAux,
+                Shopping_Cart:shoppingCartAux
             }
         })
 
         console.log("ACA --> ",existingItemCart,"\n","\n","\n");
 
         if(existingItemCart){
-            return 'Ya has agregado este producto';
+            existingItemCart.quantity += itemCartRequest.quantity;
+            this.CarItemsRepository.update(existingItemCart.itemCartId,existingItemCart);
+            return existingItemCart;
         }
         // validar de un producto ya agregado para que solo se actualize
 
         ItemCart.AddedDate = new Date();
-        ItemCart.productId = productAux;
+        ItemCart.ProductId = productAux;
         ItemCart.quantity = itemCartRequest.quantity;
-        ItemCart.shoppingCart = shoppingCartAux;
+        ItemCart.Shopping_Cart = shoppingCartAux;
 
         const itemCartToSave = await this.CarItemsRepository.create(ItemCart);
         return await this.CarItemsRepository.save(itemCartToSave);
