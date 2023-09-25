@@ -12,4 +12,9 @@ export class ItemCartController {
     getItemCart(@Body() itemCartRequest:ItemCartRequest){
         return this.ItemCartService.postCartItems(itemCartRequest);
     }
+
+    @Post()
+    PostItemCart(@Body() itemCartRequest:any){
+
+    }
 }
