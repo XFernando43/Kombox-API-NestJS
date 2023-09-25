@@ -18,26 +18,30 @@ export class ItemCartService {
     }
 
     async postCartItems(itemCartRequest:ItemCartRequest){
+        //new itemCart
         let ItemCart = new CartItems();
-        const productAux = await this.ProductRepository.findOne({
-             where:{
-                 productId:itemCartRequest.productId
-            }
-        })
 
+        //Validar si existe el producto
+        const productAux = await this.ProductRepository.findOne({
+             where:{productId:itemCartRequest.productId}
+        })
         if(!productAux){
             return new HttpException('Product not found', HttpStatus.CONFLICT);
         }
-
+        //validar que el shopping Cart Existe
         const shoppingCartAux = await this.ShoppingCartRepository.findOne({
-            where:{
-                shoppingCartId:itemCartRequest.ShoppingCartId
-            }
+            where:{shoppingCartId:itemCartRequest.ShoppingCartId}
         })
-
         if(!shoppingCartAux){
             return new HttpException('ShoppingCart Does not exist', HttpStatus.CONFLICT);
         }
+
+        // product y itemCart Exist
+
+        /*
+        
+        */
+         
 
         ItemCart.AddedDate = new Date();
         ItemCart.productId = productAux;
@@ -45,8 +49,8 @@ export class ItemCartService {
         ItemCart.shoppingCart = shoppingCartAux;
 
         const itemCartToSave = await this.CarItemsRepository.create(ItemCart);
-        await this.CarItemsRepository.save(itemCartToSave);
-
+        return await this.CarItemsRepository.save(itemCartToSave);
+        
     }
 
 }

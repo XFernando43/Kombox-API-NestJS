@@ -8,13 +8,13 @@ import { ItemCartRequest } from './request/itemCartRequest';
 export class ItemCartController {
     constructor(private ItemCartService:ItemCartService){}
 
-    @Get()
+    @Post()
     getItemCart(@Body() itemCartRequest:ItemCartRequest){
         return this.ItemCartService.postCartItems(itemCartRequest);
     }
 
-    @Post()
-    PostItemCart(@Body() itemCartRequest:any){
+    // @Post()
+    // PostItemCart(@Body() itemCartRequest:any){
 
-    }
+    // }
 }

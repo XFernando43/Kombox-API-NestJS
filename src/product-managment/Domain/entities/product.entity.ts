@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { ProductStatus } from "../enums/ProductStatus"
 import { Cateogry } from "./category.entity"
+import { CartItems } from "src/Shopping-Managment/domain/entities/cartItems.entity"
 
 @Entity({name:'products'})
 export class product{
@@ -24,6 +25,7 @@ export class product{
     @JoinColumn({ name: 'category_id' }) // Especifica el nombre de la columna de clave foránea
     category: Cateogry;
 
-
+    @OneToMany(()=>CartItems,(cartItems)=>cartItems.productId)
+    itemCart:CartItems[];
     
 }  

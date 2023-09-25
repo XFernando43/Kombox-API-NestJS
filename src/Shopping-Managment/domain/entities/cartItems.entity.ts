@@ -1,5 +1,5 @@
 import { product } from "src/product-managment/Domain/entities/product.entity"
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
 import { ShoppingCart } from "./ShoppingCart.entity"
 
 @Entity('CartItems')
@@ -10,7 +10,7 @@ export class CartItems{
     @Column({type:'datetime', default: ()=>'CURRENT_TIMESTAMP'})
     AddedDate:Date
 
-    @OneToOne(()=>product,(product)=>product.productId)
+    @ManyToOne(()=>product,(product)=>product.itemCart)
     @JoinColumn({name:'ProductId'})
     productId:product 
     
